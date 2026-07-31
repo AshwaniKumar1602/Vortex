@@ -134,6 +134,9 @@ body,
     @apply font-sans;
   }
   @import "@uploadthing/react/styles.css";
+  body {
+  pointer-events: auto !important;
+}
   
 
 }
