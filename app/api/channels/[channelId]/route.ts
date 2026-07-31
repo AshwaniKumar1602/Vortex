@@ -63,7 +63,7 @@ export async function PATCH(
   try {
     const profile = await currentProfile();
     const { searchParams } = new URL(req.url);
-    const {name,type} = await req.json();
+    const { name, type } = await req.json();
     const serverId = searchParams.get("serverId");
 
     // Next.js 15+ App Router requires awaiting params
@@ -78,7 +78,7 @@ export async function PATCH(
     if (!channelId) {
       return new NextResponse("Channel ID missing", { status: 400 });
     }
-    if(name === "general"){
+    if (name === "general") {
       return new NextResponse("Cannot change name of general channel", { status: 400 });
     }
 
@@ -95,19 +95,21 @@ export async function PATCH(
         },
       },
       data: {
-        update:{
-          where:{
-            id:(await params).channelId,
-            NOT:{
-              name:"general"
+        channels: {
+          update: {
+            where: {
+              id: (await params).channelId,
+              NOT: {
+                name: "general"
+              }
+            },
+            data: {
+              name,
+              type
             }
-          },
-          data:{
-            name,
-            type
           }
         }
-      },
+      }
     });
 
     return NextResponse.json(server);
