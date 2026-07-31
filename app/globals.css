@@ -4,8 +4,8 @@
 
 html,
 body,
-:root{
-  height:100%;
+:root {
+  height: 100%;
 }
 
 @custom-variant dark (&:is(.dark *));
@@ -127,16 +127,21 @@ body,
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
+
   html {
     @apply font-sans;
   }
-  @import "@uploadthing/react/styles.css";
+
   body {
-  pointer-events: auto !important;
-}
-  
+    pointer-events: auto !important;
+  }
+
+  @import "@uploadthing/react/styles.css";
+
+
 
 }
