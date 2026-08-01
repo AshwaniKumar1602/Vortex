@@ -16,21 +16,12 @@ export const FileUpload = ({
   value,
   endpoint
 }: FileUploadProps) => {
-  // Extract file extension safely
-  const getExtension = (url: string) => {
-    if (!url) return "";
-    const cleanUrl = url.split("?")[0].split("#")[0];
-    return cleanUrl.split(".").pop()?.toLowerCase() || "";
-  };
-
-  const extension = getExtension(value);
-  const imageExtensions = ["jpg", "jpeg", "png", "gif", "webp", "svg"];
   
-  // Explicitly check if it's an image; otherwise treat as PDF/Document
-  const isImage = imageExtensions.includes(extension);
-  const isPDF = !isImage && !!value;
+  const lowerValue = value?.toLowerCase() || "";
+  const isPDF = endpoint !== "serverImage" && lowerValue.includes(".pdf");
+  const isImage = !!value && !isPDF;
 
-  // Render PDF / File Card Preview
+  
   if (value && isPDF) {
     return (
       <div className="relative flex items-center p-2 mt-2 rounded-md bg-background/10 border border-slate-200 dark:border-slate-800">
@@ -54,7 +45,7 @@ export const FileUpload = ({
     );
   }
 
-  // Render Image Preview
+ 
   if (value && isImage) {
     return (
       <div className="relative h-20 w-20">
@@ -82,9 +73,11 @@ export const FileUpload = ({
         const file = res?.[0];
         if (file) {
           let url = file.url;
-          // Append extension hash if UploadThing URL lacks it
-          if (file.name?.toLowerCase().endsWith(".pdf") && !url.toLowerCase().includes(".pdf")) {
-            url = `${url}#.pdf`;
+          const ext = file.name?.split(".").pop()?.toLowerCase();
+          
+          
+          if (ext && !url.toLowerCase().includes(`.${ext}`)) {
+            url = `${url}?ext=.${ext}`;
           }
           onChange(url);
         }

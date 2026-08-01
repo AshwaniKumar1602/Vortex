@@ -29,7 +29,7 @@ export const LeaveServerModal = () => {
     const onClick= async ()=>{
         try{
             setIsLoading(true)
-            await axios.patch(`/api/servers/&{server?.id}/leave`);
+            await axios.patch(`/api/servers/${server?.id}/leave`);
             onClose();
             router.refresh();
             router.push("/")
@@ -61,14 +61,14 @@ export const LeaveServerModal = () => {
                 <DialogFooter className="bg-gray-300 px-6 py-4">
                     <div className="flex items-center justify-center w-full">
                         <Button disabled={isLoading}
-                        onClick={()=>{onClose}}
+                        onClick={onClose}
                         variant="ghost"
                         
                         >
                             Cancel
                         </Button>
                         <Button disabled={isLoading}
-                        onClick={()=>{onClick}}
+                        onClick={onClick}
                         variant="primary">
                             Confirm
                         </Button>
