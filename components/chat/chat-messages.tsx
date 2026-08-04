@@ -17,7 +17,7 @@ type MessageWithMemberWithProfile = Message & {
         profile: Profile
     }
 }
-const DATE_FORMAT = "d MM yyyy , HH:mm"
+const DATE_FORMAT = "d/MM/yyyy , HH:mm"
 
 interface ChatMessagesProps {
     name: string,
